@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,8 +26,8 @@
                 <h2 id="auth-title">Iniciar Sesión</h2>
                 
                 <form id="auth-form">
-                    <input type="email" id="email" placeholder="Email" required>
-                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
                     <button type="submit" id="auth-submit">Iniciar Sesión</button>
                 </form>
                 
@@ -157,8 +156,8 @@
                     <button id="close-entry-modal">&times;</button>
                 </div>
                 <form id="entry-form">
-                    <input type="text" id="entry-title" placeholder="Título de la entrada" required>
-                    <textarea id="entry-content" placeholder="¿Qué ha pasado hoy? Escribe sobre tus pensamientos y sentimientos..." required></textarea>
+                    <input type="text" id="entry-title" name="title" placeholder="Título de la entrada" required>
+                    <textarea id="entry-content" name="content" placeholder="¿Qué ha pasado hoy? Escribe sobre tus pensamientos y sentimientos..." required></textarea>
                     <div id="selected-mood-display" class="selected-mood hidden">
                         <span>Estado de ánimo: </span>
                         <span id="mood-display"></span>
