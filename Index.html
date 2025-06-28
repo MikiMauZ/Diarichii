@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diarichii - Diario Personal</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading" class="screen">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p>Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen hidden">
+            <div class="auth-container">
+                <h1>Diarichii</h1>
+                <h2 id="auth-title">Iniciar Sesión</h2>
+                
+                <form id="auth-form">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <button type="submit" id="auth-submit">Iniciar Sesión</button>
+                </form>
+                
+                <p>
+                    <span id="auth-switch-text">¿No tienes cuenta?</span>
+                    <button type="button" id="auth-switch">Regístrate</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="main-app" class="screen hidden">
+            <!-- Header -->
+            <header class="app-header">
+                <div>
+                    <h1>¡Hola!</h1>
+                    <p>¿Cómo te sientes hoy?</p>
+                </div>
+                <button id="logout-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Content -->
+            <main id="main-content">
+                <!-- Home View -->
+                <div id="home-view" class="view">
+                    <div class="mood-quick-section">
+                        <h3>Estado de ánimo rápido</h3>
+                        <div id="quick-moods" class="quick-moods-grid"></div>
+                        <button id="more-moods-btn" class="more-moods-btn">Ver más emociones</button>
+                    </div>
+
+                    <div id="mood-history-section" class="mood-history-section hidden">
+                        <h3>Historial de hoy</h3>
+                        <div id="mood-history" class="mood-history"></div>
+                    </div>
+
+                    <div class="recent-entries-section">
+                        <div class="section-header">
+                            <h3>Entradas recientes</h3>
+                            <button id="view-all-entries">Ver todas</button>
+                        </div>
+                        <div id="recent-entries" class="recent-entries"></div>
+                    </div>
+                </div>
+
+                <!-- Entries View -->
+                <div id="entries-view" class="view hidden">
+                    <div class="section-header">
+                        <h3>Mis entradas</h3>
+                        <button id="new-entry-btn" class="primary-btn">Nueva entrada</button>
+                    </div>
+                    <div id="entries-list" class="entries-list"></div>
+                </div>
+
+                <!-- Calendar View -->
+                <div id="calendar-view" class="view hidden">
+                    <div class="calendar-header">
+                        <button id="prev-month">&lt;</button>
+                        <h3 id="calendar-title"></h3>
+                        <button id="next-month">&gt;</button>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                    <div id="calendar-entries" class="calendar-entries"></div>
+                </div>
+            </main>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <button class="nav-btn active" data-view="home">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                    </svg>
+                    <span>Inicio</span>
+                </button>
+                <button class="nav-btn" data-view="entries">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10,9 9,9 8,9"></polyline>
+                    </svg>
+                    <span>Entradas</span>
+                </button>
+                <button class="nav-btn" data-view="calendar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Calendario</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Mood Selector Modal -->
+        <div id="mood-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>¿Cómo te sientes?</h3>
+                    <button id="close-mood-modal">&times;</button>
+                </div>
+                <div class="mood-categories">
+                    <button class="category-btn active" data-category="all">Todas</button>
+                    <button class="category-btn" data-category="agradable">Agradables</button>
+                    <button class="category-btn" data-category="neutral">Neutras</button>
+                    <button class="category-btn" data-category="desagradable">Desagradables</button>
+                </div>
+                <div id="mood-carousel" class="mood-carousel"></div>
+            </div>
+        </div>
+
+        <!-- Entry Form Modal -->
+        <div id="entry-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Nueva entrada</h3>
+                    <button id="close-entry-modal">&times;</button>
+                </div>
+                <form id="entry-form">
+                    <input type="text" id="entry-title" placeholder="Título de la entrada" required>
+                    <textarea id="entry-content" placeholder="¿Qué ha pasado hoy? Escribe sobre tus pensamientos y sentimientos..." required></textarea>
+                    <div id="selected-mood-display" class="selected-mood hidden">
+                        <span>Estado de ánimo: </span>
+                        <span id="mood-display"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="select-mood-btn">Seleccionar estado de ánimo</button>
+                        <button type="submit" class="primary-btn">Guardar entrada</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
