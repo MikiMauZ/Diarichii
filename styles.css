@@ -1,0 +1,605 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f9fafb;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.screen {
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loading */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 1rem;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #8b5cf6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Auth */
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.auth-container h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #8b5cf6;
+    margin-bottom: 0.5rem;
+}
+
+.auth-container h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #374151;
+}
+
+#auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#auth-form input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+#auth-form input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+#auth-submit {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#auth-submit:hover {
+    background: #7c3aed;
+}
+
+#auth-switch {
+    background: none;
+    border: none;
+    color: #8b5cf6;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 0.5rem;
+}
+
+/* Main App */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem 1rem;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.app-header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #374151;
+}
+
+.app-header p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+#logout-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: color 0.2s;
+}
+
+#logout-btn:hover {
+    color: #374151;
+}
+
+/* Main Content */
+#main-content {
+    padding: 1rem;
+    padding-bottom: 5rem;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Mood Section */
+.mood-quick-section,
+.mood-history-section,
+.recent-entries-section {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.mood-quick-section h3,
+.mood-history-section h3,
+.recent-entries-section h3 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #374151;
+}
+
+.quick-moods-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.mood-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    border: none;
+    background: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.mood-btn:hover {
+    background: #f3f4f6;
+}
+
+.mood-btn .emoji {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.mood-btn .name {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.more-moods-btn {
+    width: 100%;
+    background: #f3f4f6;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    color: #8b5cf6;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.more-moods-btn:hover {
+    background: #e5e7eb;
+}
+
+/* Mood History */
+.mood-history {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.mood-history-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f9fafb;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Entries */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.section-header button {
+    background: none;
+    border: none;
+    color: #8b5cf6;
+    cursor: pointer;
+    font-size: 0.875rem;
+    text-decoration: underline;
+}
+
+.recent-entries,
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.entry-item {
+    border-left: 4px solid #8b5cf6;
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 0.5rem;
+}
+
+.entry-title {
+    font-weight: 600;
+    color: #374151;
+}
+
+.entry-date {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.entry-content {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.primary-btn {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+.primary-btn:hover {
+    background: #7c3aed;
+}
+
+/* Calendar */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.calendar-header button:hover {
+    background: #f3f4f6;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.calendar-day {
+    background: white;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.calendar-day:hover {
+    background: #f3f4f6;
+}
+
+.calendar-day.has-entry {
+    background: #e0e7ff;
+}
+
+.calendar-day.empty {
+    color: #d1d5db;
+    cursor: default;
+}
+
+.calendar-entries {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    padding: 0.5rem;
+}
+
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s;
+}
+
+.nav-btn.active {
+    color: #8b5cf6;
+}
+
+.nav-btn span {
+    font-size: 0.75rem;
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 0.75rem;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+    font-weight: 600;
+    color: #374151;
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: color 0.2s;
+}
+
+.modal-header button:hover {
+    color: #374151;
+}
+
+/* Mood Categories */
+.mood-categories {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.category-btn {
+    background: #f3f4f6;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.category-btn.active {
+    background: #8b5cf6;
+    color: white;
+}
+
+/* Mood Carousel */
+.mood-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.mood-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mood-option:hover {
+    background: #f3f4f6;
+}
+
+.mood-option.selected {
+    border-color: #8b5cf6;
+    background: #e0e7ff;
+}
+
+.mood-option .emoji {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.mood-option .name {
+    font-size: 0.875rem;
+    text-align: center;
+    color: #374151;
+}
+
+/* Entry Form */
+#entry-form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#entry-title {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+#entry-content {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+#entry-title:focus,
+#entry-content:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.selected-mood {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f3f4f6;
+    border-radius: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+#select-mood-btn {
+    background: #f3f4f6;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+#select-mood-btn:hover {
+    background: #e5e7eb;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .quick-moods-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .mood-carousel {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
